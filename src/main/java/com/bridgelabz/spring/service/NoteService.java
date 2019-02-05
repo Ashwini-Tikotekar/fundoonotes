@@ -1,5 +1,7 @@
 package com.bridgelabz.spring.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.bridgelabz.spring.model.Note;
@@ -13,5 +15,6 @@ public interface NoteService {
 
 	public Note deleteNote(int id, HttpServletRequest request);
 
+	public List<Note> retrieveNote(HttpServletRequest request);
 
 }

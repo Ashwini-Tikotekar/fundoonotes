@@ -1,5 +1,7 @@
 package com.bridgelabz.spring.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +33,11 @@ public class NoteServiceImlp implements NoteService {
 	public Note updateNote(int id, Note user, HttpServletRequest request) {
 		Note user2 = noteDao.getNoteById(id);
 		if (user2 != null) {
-			user2.setNoteId(user.getNoteId());
 			user2.setTitle(user.getTitle());
 			user2.setDescription(user.getDescription());
-			user2.setUpdated_Date(user.getUpdated_Date());
-			user2.setCreated_Date(user.getCreated_Date());
+			user2.setArchive(user.isArchive());
+			user2.setPinned(user.isPinned());
+			user2.setInTrash(user.isInTrash());
 			noteDao.updateNote(id, user2);
 		}
 		return user2;
@@ -50,4 +52,18 @@ public class NoteServiceImlp implements NoteService {
 
 
 	}
+
+
+	@Transactional
+	public List<Note> retrieveNote(HttpServletRequest request) {
+		List<Note> listOfNote = noteDao.retrieveNote();
+		if (!listOfNote.isEmpty()) {
+			return listOfNote;
+		}
+		return null;
+	}
+
 }
+
+
+

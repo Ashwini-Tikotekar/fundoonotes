@@ -1,5 +1,7 @@
 package com.bridgelabz.spring.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +33,8 @@ public class NoteController {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-		
-		
+
+
 	}
 	@RequestMapping(value = "/updatenote", method = RequestMethod.POST)
 	public ResponseEntity<?> updateNote(@RequestParam("id") int id, @RequestBody Note user,
@@ -58,5 +60,14 @@ public class NoteController {
 					HttpStatus.NOT_FOUND);
 		}
 	}
-
+	@RequestMapping(value = "/retrievenote", method = RequestMethod.GET)
+	public ResponseEntity<?> createNote(HttpServletRequest request) {
+		List<Note> listOfNote = noteService.retrieveNote(request);
+		if (!listOfNote.isEmpty()) {
+			return new ResponseEntity<List<Note>>(listOfNote, HttpStatus.FOUND);
+		} else {
+			return new ResponseEntity<String>("Email incorrect. Please enter valid email address present in database",
+					HttpStatus.NOT_FOUND);
+		}
+	}
 }

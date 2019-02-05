@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @SuppressWarnings("serial")
 @Entity
@@ -30,7 +31,7 @@ public class Note implements Serializable{
 	@Column(name = "created_Date")
 	private Timestamp created_Date;
 
-	@CreationTimestamp
+	@UpdateTimestamp
 	@Column(name="updated_Date")
 	private Timestamp updated_Date;
 

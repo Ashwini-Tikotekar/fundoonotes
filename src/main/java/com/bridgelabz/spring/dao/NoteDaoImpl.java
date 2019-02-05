@@ -1,5 +1,7 @@
 package com.bridgelabz.spring.dao;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -60,7 +62,12 @@ public class NoteDaoImpl implements NoteDao{
 		tx.commit();
 		session.close();
 	}
-	
+	public List<Note> retrieveNote() {
+        Session session = sessionFactory.openSession();
+        String hqlQuery = "from Note";
+        List<Note> listOfNote = session.createQuery(hqlQuery).list();
+        return listOfNote;
+    }
 	}
 
 

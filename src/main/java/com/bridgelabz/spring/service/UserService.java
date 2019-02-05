@@ -11,6 +11,7 @@ public interface UserService {
 
 	public UserDetails deleteUser(int id, HttpServletRequest request);
 
+	UserDetails activateUser(String token, HttpServletRequest request);
 
 }
 

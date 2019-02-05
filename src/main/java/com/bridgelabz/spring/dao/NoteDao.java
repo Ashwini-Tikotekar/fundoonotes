@@ -1,5 +1,7 @@
 package com.bridgelabz.spring.dao;
 
+import java.util.List;
+
 import com.bridgelabz.spring.model.Note;
 
 public interface NoteDao {
@@ -12,4 +14,5 @@ public interface NoteDao {
 	public void updateNote(int id, Note user);
 
 	public void deleteNote(int id);
+	public List<Note> retrieveNote();
 }
