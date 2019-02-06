@@ -1,5 +1,7 @@
 package com.bridgelabz.spring.service;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,9 +42,9 @@ public class UserServiceImlp implements UserService {
 
 
     @Transactional
-	public UserDetails loginUser(String emailId, String password, HttpServletRequest request) {
+	public UserDetails loginUser(String emailId, String password, HttpServletRequest request,HttpServletResponse resp) {
 
-		UserDetails details = userDao.loginUser(emailId);
+		UserDetails details = userDao.loginUser(emailId,resp);
 		if (details != null) {
 			boolean match=bcryptEncoder.matches(password, details.getPassword());
 			if(match)

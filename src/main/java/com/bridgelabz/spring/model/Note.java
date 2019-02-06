@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,6 +45,10 @@ public class Note implements Serializable{
 
 	@Column(name="inTrash")
 	private boolean inTrash;
+
+	@ManyToOne
+	@JoinColumn(name="id",nullable=false)
+	private UserDetails id;
 
 	public int getNoteId() {
 		return noteId;
@@ -113,6 +119,14 @@ public class Note implements Serializable{
 		return "Note [noteId=" + noteId + ", Title=" + Title + ", description=" + description + ", created_Date="
 				+ created_Date + ", updated_Date=" + updated_Date + ", isArchive=" + isArchive + ", isPinned="
 				+ isPinned + ", inTrash=" + inTrash + "]";
+	}
+
+	public UserDetails getId() {
+		return id;
+	}
+
+	public void setId(UserDetails id) {
+		this.id = id;
 	}
 
 

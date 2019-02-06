@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.bridgelabz.spring.model.Note;
 
 public interface NoteService {
-	public boolean createNote(Note user, HttpServletRequest request);
+	public boolean createNote(Note user,int id, HttpServletRequest request);
 
 	//public Note loginNote(String emailId, String password, HttpServletRequest request);
 
@@ -15,6 +15,6 @@ public interface NoteService {
 
 	public Note deleteNote(int id, HttpServletRequest request);
 
-	public List<Note> retrieveNote(HttpServletRequest request);
+	public List<Note> retrieveNote(int id,HttpServletRequest request);
 
 }

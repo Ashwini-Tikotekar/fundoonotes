@@ -14,5 +14,5 @@ public interface NoteDao {
 	public void updateNote(int id, Note user);
 
 	public void deleteNote(int id);
-	public List<Note> retrieveNote();
+	public List<Note> retrieveNote(int id);
 }

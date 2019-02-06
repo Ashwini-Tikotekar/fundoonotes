@@ -62,12 +62,15 @@ public class NoteDaoImpl implements NoteDao{
 		tx.commit();
 		session.close();
 	}
-	public List<Note> retrieveNote() {
+	public List<Note> retrieveNote(int id) {
         Session session = sessionFactory.openSession();
-        String hqlQuery = "from Note";
-        List<Note> listOfNote = session.createQuery(hqlQuery).list();
+        Query query=session.createQuery("from Note where id= :id");
+        query.setInteger("userId", id);
+        List<Note> listOfNote = query.list();
         return listOfNote;
     }
+
+
 	}
 
 

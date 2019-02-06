@@ -1,5 +1,7 @@
 package com.bridgelabz.spring.controller;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.bridgelabz.spring.model.Note;
 import com.bridgelabz.spring.model.UserDetails;
+import com.bridgelabz.spring.service.NoteService;
 import com.bridgelabz.spring.service.UserService;
 
 @RestController
@@ -32,9 +37,9 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ResponseEntity<?> loginUser(@RequestParam("emailId") String emailId,
-			@RequestParam("password") String password, HttpServletRequest request) {
+			@RequestParam("password") String password, HttpServletRequest request,HttpServletResponse resp) {
 
-		UserDetails user = userService.loginUser(emailId, password, request);
+		UserDetails user = userService.loginUser(emailId, password, request,resp);
 		if (user != null) {
 			return new ResponseEntity<UserDetails>(user, HttpStatus.FOUND);
 		} else {
@@ -77,7 +82,7 @@ public class UserController {
                     HttpStatus.NOT_FOUND);
         }
     }
-
+	
 }
 
 

@@ -1,10 +1,15 @@
 package com.bridgelabz.spring.model;
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @SuppressWarnings("serial")
 @Entity
@@ -29,6 +34,9 @@ public class UserDetails implements Serializable{
 	private long mobileNumber;
    @Column(name="activate_status")
     private boolean activate_status;
+   @OneToMany(mappedBy="id")
+   @JsonIgnore
+   private Set<UserDetails> user;
    
 	public int getId() {
 		return id;
