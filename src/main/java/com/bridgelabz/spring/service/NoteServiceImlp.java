@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgelabz.spring.dao.NoteDao;
 import com.bridgelabz.spring.dao.UserDao;
+import com.bridgelabz.spring.model.Label;
 import com.bridgelabz.spring.model.Note;
 import com.bridgelabz.spring.model.UserDetails;
 import com.bridgelabz.spring.utility.TokenGenerator;
@@ -21,20 +22,20 @@ public class NoteServiceImlp implements NoteService {
 	private NoteDao noteDao;
 	@Autowired
 	private TokenGenerator tokenGenerator;
-	  @Autowired
-	    private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 
-	    @Transactional
-	    public boolean createNote(Note note, int id,HttpServletRequest request ) {
-	        UserDetails user = userDao.getUserById(id);
-	        if (user != null) {
-	            note.setId(user);
-	            int noteid = noteDao.createNote(note);
-	            if (noteid > 0) {
-	                return true;
-	            }
-	        }        return false;
-	    }
+	@Transactional
+	public boolean createNote(Note note, int id,HttpServletRequest request ) {
+		UserDetails user = userDao.getUserById(id);
+		if (user != null) {
+			//note.setId(user);
+			int noteid = noteDao.createNote(note);
+			if (noteid > 0) {
+				return true;
+			}
+		}        return false;
+	}
 
 	public Note updateNote(int id, Note user, HttpServletRequest request) {
 		Note user2 = noteDao.getNoteById(id);
@@ -69,9 +70,48 @@ public class NoteServiceImlp implements NoteService {
 		return null;
 	}
 
+
+	@Transactional
+	public boolean createLabel ( Label label,int id,HttpServletRequest request) {
+		UserDetails user = userDao.getUserById(id);
+		if (user != null) {
+			label.setId(user);
+		
+			int labelid = noteDao.createLabel(label);
+			if (labelid > 0) {
+				return true;
+			}
+		}	       return false;
+	}
+	
+	
 	
 
+	public Label deleteLabel(int id, HttpServletRequest request) {
+		Label user2 = noteDao.getLabelById(id);
+		if (user2 != null) {
+			noteDao.deleteLabel(id);
+		}
+		return user2;
+
 }
-
-
+	@Transactional
+	public Label editLabel(int id, Label label, HttpServletRequest request) {
+		Label label1 = noteDao.getLabelById(id);
+		
+		if (label1 != null) {
+			label1.setLabelName(label.getLabelName());
+			noteDao.editLabel(id, label1);
+		}
+		return label1;
+	}
+	@Transactional
+	public List<Label> retrieveLabel(int id,HttpServletRequest request) {
+		List<Label> listOfLabel = noteDao.retrieveLabel(id);
+		if (!listOfLabel.isEmpty()) {
+			return listOfLabel;
+		}
+		return null;
+	}
+}
 

@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bridgelabz.spring.model.Label;
 import com.bridgelabz.spring.model.Note;
 
 
@@ -70,8 +71,53 @@ public class NoteDaoImpl implements NoteDao{
         return listOfNote;
     }
 
-
+	public int createLabel(Label label) {
+		int userId = 0;
+		Session session = sessionFactory.getCurrentSession();
+		userId = (Integer) session.save(label);
+		return userId;
 	}
+	
+	public Label getLabelById(int id) {
+		Session session = sessionFactory.openSession();
+//		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from Label where id= :id");
+		query.setInteger("id", id);
+		Label label = (Label) query.uniqueResult();
+		if (label != null) {
+			System.out.println("label detail is=" + label.getLabelId() + "," + label.getLabelName()); 
+			session.close();
+			return label;
+		} else {
+			return null;
+		}
+	}
+
+	public void deleteLabel(int id) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("DELETE from  Label u where u.id= :id");
+		query.setInteger("id", id);
+		query.executeUpdate();
+		tx.commit();
+		session.close();
+	}
+	
+	public void editLabel(int id, Label label) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(label);
+		tx.commit();
+		session.close();
+	}
+	public List<Label> retrieveLabel(int id) {
+        Session session = sessionFactory.openSession();
+        Query query=session.createQuery("from Label where id= :id");
+        query.setInteger("id", id);
+        List<Label> listOfLabel = query.list();
+        return listOfLabel;
+    }
+}
 
 
 

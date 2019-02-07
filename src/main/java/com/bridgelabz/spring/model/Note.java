@@ -1,13 +1,17 @@
 package com.bridgelabz.spring.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
-
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+//import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,9 +50,14 @@ public class Note implements Serializable{
 	@Column(name="inTrash")
 	private boolean inTrash;
 
-	@ManyToOne
-	@JoinColumn(name="id",nullable=false)
-	private UserDetails id;
+//	@ManyToOne
+//	@JoinColumn(name="id",nullable=false)
+//	private UserDetails id;
+	
+
+    @ManyToMany(fetch=FetchType.EAGER,targetEntity= Label.class,cascade = CascadeType.ALL)
+    @JoinTable(name = "Note_Label", joinColumns = { @JoinColumn(name = "noteId") }, inverseJoinColumns = { @JoinColumn(name = "labelId") })
+    List<Label> labelList;
 
 	public int getNoteId() {
 		return noteId;
@@ -121,13 +130,21 @@ public class Note implements Serializable{
 				+ isPinned + ", inTrash=" + inTrash + "]";
 	}
 
-	public UserDetails getId() {
-		return id;
+	public List<Label> getLabelList() {
+		return labelList;
 	}
 
-	public void setId(UserDetails id) {
-		this.id = id;
+	public void setLabelList(List<Label> labelList) {
+		this.labelList = labelList;
 	}
+
+//	public UserDetails getId() {
+//		return id;
+//	}
+//
+//	public void setId(UserDetails id) {
+//		this.id = id;
+//	}
 
 
 

@@ -37,7 +37,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ResponseEntity<?> loginUser(@RequestParam("emailId") String emailId,
-			@RequestParam("password") String password, HttpServletRequest request,HttpServletResponse resp) {
+			@RequestParam("password") String password, HttpServletRequest request,HttpServletResponse resp ) {
 
 		UserDetails user = userService.loginUser(emailId, password, request,resp);
 		if (user != null) {

@@ -1,4 +1,5 @@
 com/bridgelabz/spring/dao/UserDao.class
+com/bridgelabz/spring/model/Label.class
 com/bridgelabz/spring/controller/NoteController.class
 com/bridgelabz/spring/service/NoteService.class
 com/bridgelabz/spring/service/UserService.class

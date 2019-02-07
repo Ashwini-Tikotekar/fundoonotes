@@ -1,5 +1,6 @@
 /home/admin1/Documents/FundooNworkspace/FundooN1/src/main/java/com/bridgelabz/spring/model/Note.java
 /home/admin1/Documents/FundooNworkspace/FundooN1/src/main/java/com/bridgelabz/spring/model/UserDetails.java
+/home/admin1/Documents/FundooNworkspace/FundooN1/src/main/java/com/bridgelabz/spring/model/Label.java
 /home/admin1/Documents/FundooNworkspace/FundooN1/src/main/java/com/bridgelabz/spring/dao/UserDaoImpl.java
 /home/admin1/Documents/FundooNworkspace/FundooN1/src/main/java/com/bridgelabz/spring/service/UserServiceImlp.java
 /home/admin1/Documents/FundooNworkspace/FundooN1/src/main/java/com/bridgelabz/spring/controller/UserController.java

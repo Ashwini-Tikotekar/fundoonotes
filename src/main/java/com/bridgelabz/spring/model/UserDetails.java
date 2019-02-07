@@ -32,12 +32,21 @@ public class UserDetails implements Serializable{
 
 	@Column(name = "mobileNumber")
 	private long mobileNumber;
-   @Column(name="activate_status")
-    private boolean activate_status;
-   @OneToMany(mappedBy="id")
-   @JsonIgnore
-   private Set<UserDetails> user;
-   
+	@Column(name="activate_status")
+	private boolean activate_status;
+
+	@OneToMany(mappedBy="id")
+	@JsonIgnore
+	private Set<Label> label;
+
+	public Set<Label> getLabel() {
+		return label;
+	}
+
+	public void setLabel(Set<Label> label) {
+		this.label = label;
+	}
+
 	public int getId() {
 		return id;
 	}
