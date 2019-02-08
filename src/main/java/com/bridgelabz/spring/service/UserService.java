@@ -9,7 +9,7 @@ public interface UserService {
 
 	public UserDetails loginUser(String emailId, String password, HttpServletRequest request,HttpServletResponse resp);
 
-	public UserDetails updateUser(int id, UserDetails user, HttpServletRequest request);
+	public UserDetails updateUser( String token, UserDetails user, HttpServletRequest request);
 
 	public UserDetails deleteUser(int id, HttpServletRequest request);
 

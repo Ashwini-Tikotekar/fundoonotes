@@ -11,7 +11,7 @@ public interface UserDao {
 
 	public UserDetails getUserById(int id);
 
-	public void updateUser(int id, UserDetails user);
+	public void updateUser(String token, UserDetails user);
 
 	public void deleteUser(int id);
 }

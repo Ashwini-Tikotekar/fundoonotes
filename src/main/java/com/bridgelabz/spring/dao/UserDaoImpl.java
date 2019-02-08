@@ -31,7 +31,7 @@ private TokenGenerator tokenGenerator;
 		Transaction tx = session.beginTransaction();
 		Query query = session.createQuery("from UserDetails where emailId= :emailId");
 		query.setString("emailId", emailId);
-//		query.setString("password", password);
+	//query.setString("password",password);
 		UserDetails user = (UserDetails) query.uniqueResult();
 	
 		if (user != null && user.isActivate_status()==true) {
@@ -68,7 +68,7 @@ private TokenGenerator tokenGenerator;
 		}
 	}
 
-	public void updateUser(int id, UserDetails user) {
+	public void updateUser(String token, UserDetails user) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.update(user);

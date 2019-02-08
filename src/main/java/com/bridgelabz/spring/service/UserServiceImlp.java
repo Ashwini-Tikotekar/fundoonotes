@@ -54,14 +54,16 @@ public class UserServiceImlp implements UserService {
 
 	}
     @Transactional
-	public UserDetails updateUser(int id, UserDetails user, HttpServletRequest request) {
+	public UserDetails updateUser(String token, UserDetails user, HttpServletRequest request)
+    {
+    	int id =tokenGenerator.VerifyToken(token);
 		UserDetails user2 = userDao.getUserById(id);
 		if (user2 != null) {
 			user2.setEmailId(user.getEmailId());
 			user2.setMobileNumber(user.getMobileNumber());
 			user2.setName(user.getName());
 			user2.setPassword(user.getPassword());
-			userDao.updateUser(id, user2);
+			userDao.updateUser(token, user2);
 		}
 		return user2;
 	}
@@ -81,10 +83,13 @@ public class UserServiceImlp implements UserService {
 	        if(user!=null)
 	        {
 	            user.setActivate_status(true);
-	            userDao.updateUser(id, user);
+	            userDao.updateUser(token, user);
 	        }
 	        return user;
 	    }
+
+
+	
 
 }
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,10 +49,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ResponseEntity<?> updateUser(@RequestParam("id") int id, @RequestBody UserDetails user,
-			HttpServletRequest request) {
-
-		UserDetails user2 = userService.updateUser(id, user, request);
+	   public ResponseEntity<?> updateUser(@RequestHeader("token") String token, @RequestBody UserDetails user,
+			HttpServletRequest request,HttpServletResponse response) {
+          response.setHeader(token, token);
+		UserDetails user2 = userService.updateUser(token, user, request);
 		if (user2 != null) {
 			return new ResponseEntity<UserDetails>(user2, HttpStatus.FOUND);
 		} else {

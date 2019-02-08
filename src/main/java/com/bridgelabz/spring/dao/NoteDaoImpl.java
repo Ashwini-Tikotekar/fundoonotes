@@ -21,10 +21,10 @@ public class NoteDaoImpl implements NoteDao{
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public int createNote(Note user) {
+	public int createNote(Note note) {
 		int userId = 0;
 		Session session = sessionFactory.getCurrentSession();
-		userId = (Integer) session.save(user);
+		userId = (Integer) session.save(note);
 		return userId;
 
 	}
@@ -32,24 +32,24 @@ public class NoteDaoImpl implements NoteDao{
 
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		Query query = session.createQuery("from Note where id= :id");
-		query.setInteger("id", id);
-		Note user = (Note) query.uniqueResult();
+		Query query = session.createQuery("from Note where noteId= :noteId");
+		query.setInteger("noteId", id);
+		Note note = (Note) query.uniqueResult();
 		tx.commit();
-		if (user != null) {
-			System.out.println("User detail is=" + user.getNoteId() + "," + user.getDescription() + "," + user.getTitle() + ","
-					+ user.getCreated_Date()+","+user.getUpdated_Date());
+		if (note != null) {
+			System.out.println("Note detail is=" + note.getNoteId() + "," + note.getDescription() + "," + note.getTitle() + ","
+					+ note.getCreated_Date()+","+note.getUpdated_Date());
 			session.close();
-			return user;
+			return note;
 		} else {
 			return null;
 		}
 	}
 
-	public void updateNote(int id, Note user) {
+	public void updateNote(int id, Note note) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.update(user);
+		session.update(note);
 		tx.commit();
 		session.close();
 	}
@@ -81,8 +81,8 @@ public class NoteDaoImpl implements NoteDao{
 	public Label getLabelById(int id) {
 		Session session = sessionFactory.openSession();
 //		Transaction tx = session.beginTransaction();
-		Query query = session.createQuery("from Label where id= :id");
-		query.setInteger("id", id);
+		Query query = session.createQuery("from Label where LabelId= :LabelId");
+		query.setInteger("LabelId", id);
 		Label label = (Label) query.uniqueResult();
 		if (label != null) {
 			System.out.println("label detail is=" + label.getLabelId() + "," + label.getLabelName()); 
@@ -117,7 +117,10 @@ public class NoteDaoImpl implements NoteDao{
         List<Label> listOfLabel = query.list();
         return listOfLabel;
     }
-}
+
+		
+	}
+
 
 
 

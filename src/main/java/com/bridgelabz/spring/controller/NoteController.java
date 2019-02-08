@@ -27,9 +27,9 @@ public class NoteController {
 	private NoteService noteService;
 
 	@RequestMapping(value = "/createnote", method = RequestMethod.POST)
-	public ResponseEntity<Void> createNote(@RequestBody Note user, HttpServletRequest request,@RequestParam("id") int id) {
+	public ResponseEntity<Void> createNote(@RequestBody Note note, HttpServletRequest request,@RequestParam("id") int id) {
 		try {
-			if (noteService.createNote(user,id, request))
+			if (noteService.createNote(note,id, request))
 				return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,12 +40,12 @@ public class NoteController {
 
 	}
 	@RequestMapping(value = "/updatenote", method = RequestMethod.POST)
-	public ResponseEntity<?> updateNote(@RequestParam("id") int id, @RequestBody Note user,
+	public ResponseEntity<?> updateNote(@RequestParam("id")int id, @RequestBody Note note,
 			HttpServletRequest request) {
 
-		Note user2 = noteService.updateNote(id, user, request);
-		if (user2 != null) {
-			return new ResponseEntity<Note>(user2, HttpStatus.FOUND);
+		Note note1 = noteService.updateNote(id, note, request);
+		if (note1 != null) {
+			return new ResponseEntity<Note>(note1, HttpStatus.FOUND);
 		} else {
 			return new ResponseEntity<String>("Email incorrect. Please enter valid email address present in database",
 					HttpStatus.NOT_FOUND);
@@ -55,9 +55,9 @@ public class NoteController {
 	@RequestMapping(value = "/deletenote", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteNote(@RequestParam("id") int id, HttpServletRequest request) {
 
-		Note user = noteService.deleteNote(id, request);
-		if (user != null) {
-			return new ResponseEntity<Note>(user, HttpStatus.FOUND);
+		Note note = noteService.deleteNote(id, request);
+		if (note != null) {
+			return new ResponseEntity<Note>(note, HttpStatus.FOUND);
 		} else {
 			return new ResponseEntity<String>("Email incorrect. Please enter valid email address present in database",
 					HttpStatus.NOT_FOUND);
@@ -122,4 +122,30 @@ public class NoteController {
 					HttpStatus.NOT_FOUND);
 		}
 	}
+	
+    @RequestMapping(value = "/addnotelabel", method = RequestMethod.PUT)
+    public ResponseEntity<?> addNoteLabel(@RequestHeader("token") String token,@RequestParam("noteId") int noteId,@RequestParam("LabelId") int labelId,HttpServletRequest request)
+    {
+        
+            if (noteService.addNoteLabel(token,noteId, labelId, request)) {
+            return new ResponseEntity<String>("Note Id and Label Id have been successfully mapped", HttpStatus.FOUND);
+            }
+        
+        else {
+            return new ResponseEntity<String>("User id given is not present or Note is not activated", HttpStatus.NOT_FOUND);
+        }
+        
+
+    }
+    
+    @RequestMapping(value = "/deletenotelabel", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteNoteLabel(@RequestHeader("token") String token,@RequestParam("noteId") int noteId,@RequestParam("LabelId") int labelId, HttpServletRequest request) {
+        if(noteService.removeNoteLabel(token,noteId,labelId,request))
+        
+            return new ResponseEntity<String>("Note and label has been successfully deleted",HttpStatus.NOT_FOUND);
+        else 
+            return new ResponseEntity<String>("invalid note/label ID",HttpStatus.NOT_FOUND);
+        
+    }
+
 }
