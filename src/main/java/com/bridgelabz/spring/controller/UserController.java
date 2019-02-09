@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.spring.model.Note;
 import com.bridgelabz.spring.model.UserDetails;
-import com.bridgelabz.spring.service.NoteService;
 import com.bridgelabz.spring.service.UserService;
 
 @RestController
@@ -84,6 +82,31 @@ public class UserController {
         }
     }
 	
+
+    @RequestMapping(value = "/fogotpassword", method = RequestMethod.POST)
+    public ResponseEntity<?> fogotPassword(@RequestHeader("token") String token,@RequestBody UserDetails newPassword, HttpServletRequest request,HttpServletResponse resp) {
+
+        UserDetails user = userService.getUserByEmail(token, request,newPassword,resp);
+        if (user != null) {
+            return new ResponseEntity<UserDetails>(user, HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<String>("Email incorrect. Please enter valid email address present in database",
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(value = "/resetpassword/{token:.+}", method = RequestMethod.POST)
+    public ResponseEntity<?> resetPassword(@PathVariable("token") String token,@RequestBody UserDetails newPassword, HttpServletRequest request,
+    		HttpServletResponse resp) {
+
+        UserDetails user = userService.getUserByEmail(token,request,newPassword,resp);
+        if (user != null) {
+            return new ResponseEntity<UserDetails>(user, HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<String>("Email incorrect. Please enter valid email address present in database",
+                    HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 

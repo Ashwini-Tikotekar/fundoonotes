@@ -8,15 +8,15 @@ import com.bridgelabz.spring.model.Label;
 import com.bridgelabz.spring.model.Note;
 
 public interface NoteService {
-	 boolean createNote(Note user,int id, HttpServletRequest request);
+	 boolean createNote(String token,Note note, HttpServletRequest request);
 
 	//public Note loginNote(String emailId, String password, HttpServletRequest request);
 
-	 Note updateNote(int id, Note user, HttpServletRequest request);
+	 Note updateNote(String token,int noteId, Note note, HttpServletRequest request);
 
-	 Note deleteNote(int id, HttpServletRequest request);
+	 Note deleteNote(String token,int noteId, HttpServletRequest request);
 
-	 List<Note> retrieveNote(int id,HttpServletRequest request);
+	 List<Note> retrieveNote(String token,HttpServletRequest request);
 	 
 	 boolean createLabel(Label label ,int id, HttpServletRequest request);
 	

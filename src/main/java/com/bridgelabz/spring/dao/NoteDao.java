@@ -8,7 +8,7 @@ import com.bridgelabz.spring.model.Note;
 public interface NoteDao {
 	 int createNote(Note note);
 
-	//	public Note loginUser(String emailId, String password);
+ // Note loginUser(String emailId, String password);
 
 	 Note getNoteById(int id);
 
@@ -16,7 +16,7 @@ public interface NoteDao {
 
 	 void deleteNote(int id);
 	
-	 List<Note> retrieveNote(int id);
+	 List<Note> retrieveNote(int userId);
 	
 	 int createLabel(Label label );
 	

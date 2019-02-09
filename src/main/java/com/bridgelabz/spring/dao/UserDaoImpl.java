@@ -85,6 +85,22 @@ private TokenGenerator tokenGenerator;
 		tx.commit();
 		session.close();
 	}
+	  public UserDetails getUserByEmailId(String emailId) {
+	        Session session = sessionFactory.openSession();
+	        Query query = session.createQuery("from UserDetails where emailId= :emailId");
+	        query.setString("emailId", emailId);
+	        UserDetails aliveUser = (UserDetails) query.uniqueResult();
+	        if (aliveUser != null) {
+	            System.out.println("User detail is=" + aliveUser.getId() + "," + aliveUser.getName() + "," + aliveUser.getEmailId() + ","
+	                    + aliveUser.getMobileNumber());
+	            session.close();
+	            return aliveUser;
+	        } else {
+	            session.close();
+	            return null;
+	        }
+	    }
+
 
 }
 

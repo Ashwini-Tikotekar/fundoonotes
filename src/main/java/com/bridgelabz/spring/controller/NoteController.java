@@ -27,9 +27,9 @@ public class NoteController {
 	private NoteService noteService;
 
 	@RequestMapping(value = "/createnote", method = RequestMethod.POST)
-	public ResponseEntity<Void> createNote(@RequestBody Note note, HttpServletRequest request,@RequestParam("id") int id) {
+	public ResponseEntity<Void> createNote(@RequestHeader("token") String token,@RequestBody Note note, HttpServletRequest request){
 		try {
-			if (noteService.createNote(note,id, request))
+			if (noteService.createNote(token,note, request))
 				return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,10 +40,10 @@ public class NoteController {
 
 	}
 	@RequestMapping(value = "/updatenote", method = RequestMethod.POST)
-	public ResponseEntity<?> updateNote(@RequestParam("id")int id, @RequestBody Note note,
+	public ResponseEntity<?> updateNote(@RequestHeader("token") String token,@RequestParam("id") int noteId, @RequestBody Note note,
 			HttpServletRequest request) {
 
-		Note note1 = noteService.updateNote(id, note, request);
+		Note note1 = noteService.updateNote(token,noteId, note, request);
 		if (note1 != null) {
 			return new ResponseEntity<Note>(note1, HttpStatus.FOUND);
 		} else {
@@ -53,9 +53,9 @@ public class NoteController {
 	}
 
 	@RequestMapping(value = "/deletenote", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deleteNote(@RequestParam("id") int id, HttpServletRequest request) {
+	public ResponseEntity<?> deleteNote(@RequestHeader("token") String token,@RequestParam("id") int noteId, HttpServletRequest request) {
 
-		Note note = noteService.deleteNote(id, request);
+		Note note = noteService.deleteNote(token,noteId,request);
 		if (note != null) {
 			return new ResponseEntity<Note>(note, HttpStatus.FOUND);
 		} else {
@@ -64,8 +64,8 @@ public class NoteController {
 		}
 	}
 	@RequestMapping(value = "/retrievenote", method = RequestMethod.GET)
-	public ResponseEntity<?> createNote(@RequestParam("id") int id,HttpServletRequest request) {
-		List<Note> listOfNote = noteService.retrieveNote(id,request);
+	public ResponseEntity<?> createNote(@RequestHeader("token") String token,HttpServletRequest request) {
+		List<Note> listOfNote = noteService.retrieveNote(token,request);
 		if (!listOfNote.isEmpty()) {
 			return new ResponseEntity<List<Note>>(listOfNote, HttpStatus.FOUND);
 		} else {

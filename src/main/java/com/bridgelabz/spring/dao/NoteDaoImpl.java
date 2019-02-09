@@ -16,7 +16,7 @@ import com.bridgelabz.spring.model.Note;
 
 @Repository
 public class NoteDaoImpl implements NoteDao{
-	
+
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -26,8 +26,8 @@ public class NoteDaoImpl implements NoteDao{
 		Session session = sessionFactory.getCurrentSession();
 		userId = (Integer) session.save(note);
 		return userId;
-
 	}
+	
 	public Note getNoteById(int id) {
 
 		Session session = sessionFactory.openSession();
@@ -64,12 +64,12 @@ public class NoteDaoImpl implements NoteDao{
 		session.close();
 	}
 	public List<Note> retrieveNote(int id) {
-        Session session = sessionFactory.openSession();
-        Query query=session.createQuery("from Note where id= :id");
-        query.setInteger("userId", id);
-        List<Note> listOfNote = query.list();
-        return listOfNote;
-    }
+		Session session = sessionFactory.openSession();
+		Query query=session.createQuery("from Note where id= :id");
+		query.setInteger("id", id);
+		List<Note> listOfNote = query.list();
+		return listOfNote;
+	}
 
 	public int createLabel(Label label) {
 		int userId = 0;
@@ -77,10 +77,10 @@ public class NoteDaoImpl implements NoteDao{
 		userId = (Integer) session.save(label);
 		return userId;
 	}
-	
+
 	public Label getLabelById(int id) {
 		Session session = sessionFactory.openSession();
-//		Transaction tx = session.beginTransaction();
+		//		Transaction tx = session.beginTransaction();
 		Query query = session.createQuery("from Label where LabelId= :LabelId");
 		query.setInteger("LabelId", id);
 		Label label = (Label) query.uniqueResult();
@@ -102,7 +102,7 @@ public class NoteDaoImpl implements NoteDao{
 		tx.commit();
 		session.close();
 	}
-	
+
 	public void editLabel(int id, Label label) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -111,19 +111,20 @@ public class NoteDaoImpl implements NoteDao{
 		session.close();
 	}
 	public List<Label> retrieveLabel(int id) {
-        Session session = sessionFactory.openSession();
-        Query query=session.createQuery("from Label where id= :id");
-        query.setInteger("id", id);
-        List<Label> listOfLabel = query.list();
-        return listOfLabel;
-    }
-
-		
+		Session session = sessionFactory.openSession();
+		Query query=session.createQuery("from Label where id= :id");
+		query.setInteger("id", id);
+		List<Label> listOfLabel = query.list();
+		return listOfLabel;
 	}
 
-
-
-
-
-
 	
+
+
+}
+
+
+
+
+
+

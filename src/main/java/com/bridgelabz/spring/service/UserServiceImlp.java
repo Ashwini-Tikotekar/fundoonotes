@@ -40,7 +40,6 @@ public class UserServiceImlp implements UserService {
         return false;
     }
 
-
     @Transactional
 	public UserDetails loginUser(String emailId, String password, HttpServletRequest request,HttpServletResponse resp) {
 
@@ -87,10 +86,26 @@ public class UserServiceImlp implements UserService {
 	        }
 	        return user;
 	    }
+    
+    @Transactional
+    public UserDetails getUserByEmail( String userToken,HttpServletRequest request,UserDetails newPassword,
+    		HttpServletResponse resp) {
+        UserDetails exsistingUser=userDao.getUserByEmailId(newPassword.getEmailId());
+        if(exsistingUser!=null)
+        {
+            //String PasswordResetLink =    tokenGenerator.generateUrl("/resetpassword/", exsistingUser, request, resp);
+            String token = tokenGenerator.generateToken(String.valueOf(exsistingUser.getId()));
+            StringBuffer url=request.getRequestURL();
+            String url2=url.substring(0, url.lastIndexOf("/"));
+            url2=url2+""+token;
+            System.out.println(token);
+            emailUtilility.sendEmail("ashwinitikotekar@gmail.com", "Password Reset Link Mail", "please click on this link to reset password "+url);
+        }
+        exsistingUser.setEmailId("");
+        return exsistingUser;
+    }
 
-
-	
-
+    
 }
 
 

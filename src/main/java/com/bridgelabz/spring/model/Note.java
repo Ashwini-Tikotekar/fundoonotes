@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 //import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -50,9 +51,9 @@ public class Note implements Serializable{
 	@Column(name="inTrash")
 	private boolean inTrash;
 
-//	@ManyToOne
-//	@JoinColumn(name="id",nullable=false)
-//	private UserDetails id;
+	@ManyToOne
+	@JoinColumn(name="id",nullable=false)
+	private UserDetails id;
 	
 
     @ManyToMany(fetch=FetchType.EAGER,targetEntity= Label.class,cascade = CascadeType.ALL)
@@ -123,12 +124,7 @@ public class Note implements Serializable{
 		this.inTrash = inTrash;
 	}
 
-	@Override
-	public String toString() {
-		return "Note [noteId=" + noteId + ", Title=" + Title + ", description=" + description + ", created_Date="
-				+ created_Date + ", updated_Date=" + updated_Date + ", isArchive=" + isArchive + ", isPinned="
-				+ isPinned + ", inTrash=" + inTrash + "]";
-	}
+	
 
 	public List<Label> getLabelList() {
 		return labelList;
@@ -138,14 +134,19 @@ public class Note implements Serializable{
 		this.labelList = labelList;
 	}
 
-//	public UserDetails getId() {
-//		return id;
-//	}
-//
-//	public void setId(UserDetails id) {
-//		this.id = id;
-//	}
+	public UserDetails getId() {
+		return id;
+	}
 
+	public void setId(UserDetails id) {
+		this.id = id;
+	}
+	@Override
+	public String toString() {
+		return "Note [noteId=" + noteId + ", Title=" + Title + ", description=" + description + ", created_Date="
+				+ created_Date + ", updated_Date=" + updated_Date + ", isArchive=" + isArchive + ", isPinned="
+				+ isPinned + ", inTrash=" + inTrash + "]";
+	}
 
 
 }
